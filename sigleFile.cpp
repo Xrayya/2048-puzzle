@@ -156,15 +156,11 @@ bool checkPossMove() {
             }
         }
 
-    if (emptyBlock || sumPoss)
+    if (emptyBlock || sumPoss) {
         return true;
-        // cout << endl << "true";
-    else
+    } else {
         return false;
-        // cout << endl << "false";
-
-
-    return false;
+    }
 }
 
 void keyPress() {
@@ -184,54 +180,68 @@ void keyPress() {
 void blockMove() {
     switch (dir) {
     case UP:
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 4; j++)
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
 
-                if (field[j][i] != 0)
-                    for (int k = j + 1; k < 4; k++)
-                        if (field[k][i]) {
+                if (field[j][i] == 0) {
+                    for (int k = j + 1; k < 4; k++) {
+                        if (field[k][i] != 0) {
                             field[j][i] = field[k][i];
                             field[k][i] = 0;
                             break;
                         }
+                    }
+                }
+            }
+        }
         break;
     case DOWN:
-        for (int i = 0; i < 4; i++)
-            for (int j = 3; j >= 0; j--)
+        for (int i = 0; i < 4; i++) {
+            for (int j = 3; j >= 0; j--) {
 
-                if (!field[j][i])
-                    for (int k = j - 1; k >= 0; k--)
-                        if (field[k][i]) {
+                if (field[j][i] == 0) {
+                    for (int k = j - 1; k >= 0; k--) {
+                        if (field[k][i] != 0) {
                             field[j][i] = field[k][i];
                             field[k][i] = 0;
                             break;
                         }
+                    }
+                }
+            }
+        }
         break;
     case LEFT:
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 4; j++)
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
 
-                if (!field[i][j])
-                    for (int k = j + 1; k < 4; k++)
-
-                        if (field[i][k]) {
+                if (field[i][j] == 0) {
+                    for (int k = j + 1; k < 4; k++) {
+                        if (field[i][k] != 0) {
                             field[i][j] = field[i][k];
                             field[i][k] = 0;
                             break;
                         }
+                    }
+                }
+            }
+        }
         break;
     case RIGHT:
-        for (int i = 0; i < 4; i++)
-            for (int j = 3; j >= 0; j--)
+        for (int i = 0; i < 4; i++) {
+            for (int j = 3; j >= 0; j--) {
 
-                if (!field[i][j])
-                    for (int k = j - 1; k >= 0; k--)
-
+                if (field[i][j] == 0) {
+                    for (int k = j - 1; k >= 0; k--) {
                         if (field[i][k]) {
                             field[i][j] = field[i][k];
                             field[i][k] = 0;
                             break;
                         }
+                    }
+                }
+            }
+        }
         break;
     }
 }
@@ -239,40 +249,44 @@ void blockMove() {
 void sumSystem() {
     switch (dir) {
     case UP:
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 3; j++)
-
-                if (field[j][i] && field[j][i] == field[j + 1][i]) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (field[j][i] != 0 && field[j][i] == field[j + 1][i]) {
                     field[j][i] += field[j + 1][i];
                     field[j + 1][i] = 0;
                 }
+            }
+        }
         break;
     case DOWN:
-        for (int i = 0; i < 4; i++)
-            for (int j = 3; j > 0; j--)
-
-                if (field[j][i] && field[j][i] == field[j - 1][i]) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 3; j > 0; j--) {
+                if (field[j][i] != 0 && field[j][i] == field[j - 1][i]) {
                     field[j][i] += field[j - 1][i];
                     field[j - 1][i] = 0;
                 }
+            }
+        }
         break;
     case LEFT:
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 3; j++)
-
-                if (field[i][j] && field[i][j] == field[i][j + 1]) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (field[i][j] != 0 && field[i][j] == field[i][j + 1]) {
                     field[i][j] += field[i][j + 1];
                     field[i][j + 1] = 0;
                 }
+            }
+        }
         break;
     case RIGHT:
-        for (int i = 0; i < 4; i++)
-            for (int j = 3; j > 0; j--)
-
-                if (field[i][j] && field[i][j] == field[i][j - 1]) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 3; j > 0; j--) {
+                if (field[i][j] != 0 && field[i][j] == field[i][j - 1]) {
                     field[i][j] += field[i][j - 1];
                     field[i][j - 1] = 0;
                 }
+            }
+        }
         break;
     }
 }
@@ -286,12 +300,14 @@ void logicFlow() {
         blockMove();
         sumSystem();
         blockMove();
-        if (checkBlockMove())
+        if (checkBlockMove()) {
             generateNum();
+        }
     }
 
-    if (kInput == 117)
+    if (kInput == 117) {
         undo();
+    }
 }
 
 int main() {
@@ -313,39 +329,6 @@ int main() {
         else
             cout << endl << "false";
     }
-
-    /* if(gameOver == true)
-        cout << "Game Over"; */
-
-
-        /*for(int i = 0; i < 4; i++)
-            field[0][i] = i + 1; //1 2 3 4
-        for(int j = 0; j < 4; j++)
-            field[1][j] = j + 5; //5 6 7 8
-        for(int k = 0; k < 4; k++)
-            field[2][k] = k + 9; //9 10 11 12
-        for(int l = 0; l < 4; l++)
-            field[3][l] = l + 13; //13 14 15 16
-
-        field[1][1] = 2;
-
-        display(field);
-
-        if(!checkPossMove())
-            gameOver = true;
-
-        if(gameOver)
-            cout << endl << "true";
-        else
-            cout << endl << "false";*/
-
-            /*field[0][0] = 2;
-            field[1][2] = 2;
-            field[3][1] = 2;
-
-            display(field);
-
-            checkPossMove();*/
 
     return 0;
 }
