@@ -8,13 +8,13 @@ using namespace std;
 int field[4][4], fieldBackUp[4][4];
 int score;
 int kInput;
-enum direction {
+enum control {
     UP,
     DOWN,
     LEFT,
     RIGHT
 };
-direction dir;
+control ctrl;
 bool gameOver = false;
 bool inGame = true;
 void display (int num[4][4]) {
@@ -171,14 +171,14 @@ void keyPress() {
     //if(kInput == 97) dir = LEFT;
     //if(kInput == 100) dir = RIGHT;
 
-    if (kInput == 72) dir = UP;
-    if (kInput == 80) dir = DOWN;
-    if (kInput == 75) dir = LEFT;
-    if (kInput == 77) dir = RIGHT;
+    if (kInput == 72) ctrl = UP;
+    if (kInput == 80) ctrl = DOWN;
+    if (kInput == 75) ctrl = LEFT;
+    if (kInput == 77) ctrl = RIGHT;
 }
 
 void blockMove() {
-    switch (dir) {
+    switch (ctrl) {
     case UP:
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -247,7 +247,7 @@ void blockMove() {
 }
 
 void sumSystem() {
-    switch (dir) {
+    switch (ctrl) {
     case UP:
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
@@ -311,23 +311,13 @@ void logicFlow() {
 }
 
 int main() {
-    homeDisplay();
-    _getch();
+    while (inGame)
+    {
+        homeDisplay();
+        _getch();
 
-    srand(time(NULL));
-    setup();
-
-    while (true) {
-        logicFlow();
-        display(field);
-
-        if (checkPossMove())
-            gameOver = true;
-
-        if (gameOver)
-            cout << endl << "true";
-        else
-            cout << endl << "false";
+        srand(time(NULL));
+        setup();
     }
 
     return 0;
